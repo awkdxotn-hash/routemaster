@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# 크롤러가 색인하지 않아도 되는 경로
+Disallow: /login
+
+# 사이트맵 위치
+Sitemap: https://easykoreatrip.com/sitemap.xml

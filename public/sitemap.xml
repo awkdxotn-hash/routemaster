@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- 핵심 페이지 -->
+  <url>
+    <loc>https://easykoreatrip.com/</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://easykoreatrip.com/routes</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://easykoreatrip.com/about</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://easykoreatrip.com/contact</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://easykoreatrip.com/privacy</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- 강원도 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/gangwon-east-coast</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gangwon-pyeongchang</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gangwon-chuncheon</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gangwon-seoraksan</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gangwon-taebaek</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gangwon-wonju</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- 경상도 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/gyeongnam-south-sea</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gyeongbuk-gyeongju</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gyeongnam-tongyeong</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gyeongbuk-andong</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gyeongnam-geoje</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gyeongbuk-mungyeong</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- 전라도 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/jeonnam-yeosu</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/jeonnam-suncheon</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/jeonbuk-jeonju</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/jeonnam-damyang</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/jeonnam-boseong</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/jeonnam-mokpo</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- 충청도 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/chungbuk-danyang</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/chungnam-buyeo</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/chungnam-taean</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/chungbuk-cheongju</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- 경기도 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/gyeonggi-gapyeong</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gyeonggi-icheon</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/gyeonggi-yangpyeong</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- 서울 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/seoul-hidden-alleys</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/seoul-hangang-villages</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- 부산 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/busan-beach-village</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/busan-gamcheon</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- 제주도 루트 -->
+  <url><loc>https://easykoreatrip.com/routes/jeju-east-sunrise</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://easykoreatrip.com/routes/jeju-west-olle</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+</urlset>
