@@ -8,14 +8,23 @@ import { useReviews } from "../hooks/useReviews";
 import { routeTransport, HUBS } from "../data/transportHub";
 import { getRouteImage } from "../data/routeImages";
 
-// ── 구글 지도 URL 헬퍼 ────────────────────────────────────
-function mapsSearchUrl(name: string) {
+// ── 지도 URL 헬퍼 ─────────────────────────────────────────
+type MapMode = "google" | "naver";
+
+function googleSearchUrl(name: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + " 한국")}`;
 }
-
-function mapsDirUrl(stops: { nameKo: string }[]) {
+function naverSearchUrl(name: string) {
+  return `https://map.naver.com/v5/search/${encodeURIComponent(name)}`;
+}
+function googleDirUrl(stops: { nameKo: string }[]) {
   const waypoints = stops.map((s) => encodeURIComponent(s.nameKo)).join("/");
   return `https://www.google.com/maps/dir/${waypoints}`;
+}
+function naverDirUrl(stops: { nameKo: string }[]) {
+  const first = encodeURIComponent(stops[0]?.nameKo ?? "");
+  const last = encodeURIComponent(stops[stops.length - 1]?.nameKo ?? "");
+  return `https://map.naver.com/v5/directions/${first}/${last}/-/transit`;
 }
 
 const themeColors: Record<string, string> = {
@@ -230,6 +239,15 @@ export default function RouteDetail() {
   const { reviews, addReview } = useReviews(id ?? "");
   const imageUrl = id ? getRouteImage(id) : undefined;
   const [imgError, setImgError] = useState(false);
+  const [mapMode, setMapMode] = useState<MapMode>(() =>
+    (localStorage.getItem("mapMode") as MapMode) ?? "google"
+  );
+  const handleMapMode = (mode: MapMode) => {
+    setMapMode(mode);
+    localStorage.setItem("mapMode", mode);
+  };
+  const searchUrl = (name: string) => mapMode === "naver" ? naverSearchUrl(name) : googleSearchUrl(name);
+  const dirUrl = (stops: { nameKo: string }[]) => mapMode === "naver" ? naverDirUrl(stops) : googleDirUrl(stops);
 
   if (!route) {
     return (
@@ -359,16 +377,70 @@ export default function RouteDetail() {
 
           {/* 지도 링크 */}
           <div className="flex flex-col gap-2">
+            {/* 지도 선택 토글 */}
+            <div className="flex items-center gap-1 bg-stone-100 dark:bg-stone-800 rounded-xl p-1">
+              <button
+                onClick={() => handleMapMode("google")}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                  mapMode === "google"
+                    ? "bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-100 shadow-sm"
+                    : "text-stone-500 dark:text-stone-400 hover:text-stone-700"
+                }`}
+              >
+                🌍 Google Maps
+              </button>
+              <button
+                onClick={() => handleMapMode("naver")}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                  mapMode === "naver"
+                    ? "bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-100 shadow-sm"
+                    : "text-stone-500 dark:text-stone-400 hover:text-stone-700"
+                }`}
+              >
+                🗺️ Naver Maps
+              </button>
+            </div>
+
+            {/* 네이버 지도 앱 안내 */}
+            {mapMode === "naver" && (
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800 p-3">
+                <p className="text-xs font-semibold text-green-700 dark:text-green-400 mb-1">
+                  📱 {t("Naver Maps app required", "네이버 지도 앱 필요")}
+                </p>
+                <p className="text-xs text-green-600 dark:text-green-500 mb-2 opacity-80">
+                  {t("Install the Naver Maps app for the best experience.", "최적의 경험을 위해 네이버 지도 앱을 설치하세요.")}
+                </p>
+                <div className="flex gap-2">
+                  <a
+                    href="https://apps.apple.com/kr/app/naver-map-navigation/id311867728"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center py-1.5 bg-black text-white rounded-lg text-xs font-semibold"
+                  >
+                    App Store
+                  </a>
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.nhn.android.nmap"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs font-semibold transition-colors"
+                  >
+                    Play Store
+                  </a>
+                </div>
+              </div>
+            )}
+
             <a
-              href={route.mapUrl}
+              href={mapMode === "naver" ? naverSearchUrl(route.titleKo) : route.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold transition-colors"
             >
-              🗺️ {t("Open in Google Maps", "구글 지도 열기")}
+              🗺️ {mapMode === "naver" ? t("Open in Naver Maps", "네이버 지도 열기") : t("Open in Google Maps", "구글 지도 열기")}
             </a>
             <a
-              href={mapsDirUrl(route.days.flatMap((d) => d.stops))}
+              href={dirUrl(route.days.flatMap((d) => d.stops))}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-teal-600 text-teal-600 dark:text-teal-400 dark:border-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 text-sm font-semibold transition-colors"
@@ -401,10 +473,10 @@ export default function RouteDetail() {
                       </h3>
                     </div>
                     <a
-                      href={mapsDirUrl(day.stops)}
+                      href={dirUrl(day.stops)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      title={t("View day route on Google Maps", "이 날 루트 구글 지도로 보기")}
+                      title={t("View day route on Maps", "이 날 루트 지도로 보기")}
                       className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-700 text-xs font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
                     >
                       🗺️ {t("Day Route", "당일 루트")}
@@ -418,7 +490,7 @@ export default function RouteDetail() {
                         <div className="bg-white dark:bg-stone-800 rounded-xl border border-stone-100 dark:border-stone-700 shadow-sm p-4 group/stop">
                           <div className="flex items-start justify-between gap-2 mb-1">
                             <a
-                              href={mapsSearchUrl(stop.nameKo)}
+                              href={searchUrl(stop.nameKo)}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="font-semibold text-stone-800 dark:text-stone-100 text-sm hover:text-teal-600 dark:hover:text-teal-400 transition-colors flex items-center gap-1"
