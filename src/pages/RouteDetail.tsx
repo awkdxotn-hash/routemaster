@@ -21,10 +21,9 @@ function googleDirUrl(stops: { nameKo: string }[]) {
   const waypoints = stops.map((s) => encodeURIComponent(s.nameKo)).join("/");
   return `https://www.google.com/maps/dir/${waypoints}`;
 }
+// 네이버 지도 경로는 좌표 필수라 웹 URL 미지원 → 첫 장소 검색으로 대체
 function naverDirUrl(stops: { nameKo: string }[]) {
-  const first = encodeURIComponent(stops[0]?.nameKo ?? "");
-  const last = encodeURIComponent(stops[stops.length - 1]?.nameKo ?? "");
-  return `https://map.naver.com/v5/directions/${first}/${last}/-/transit`;
+  return naverSearchUrl(stops[0]?.nameKo ?? "");
 }
 
 const themeColors: Record<string, string> = {
@@ -408,7 +407,10 @@ export default function RouteDetail() {
                   📱 {t("Naver Maps app required", "네이버 지도 앱 필요")}
                 </p>
                 <p className="text-xs text-green-600 dark:text-green-500 mb-2 opacity-80">
-                  {t("Install the Naver Maps app for the best experience.", "최적의 경험을 위해 네이버 지도 앱을 설치하세요.")}
+                  {t(
+                    "Place search works on web. For full route navigation, use the Naver Maps app.",
+                    "장소 검색은 웹에서 동작합니다. 경로 안내는 네이버 지도 앱을 이용하세요."
+                  )}
                 </p>
                 <div className="flex gap-2">
                   <a
@@ -445,7 +447,9 @@ export default function RouteDetail() {
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-teal-600 text-teal-600 dark:text-teal-400 dark:border-teal-500 hover:bg-teal-50 dark:hover:bg-teal-900/20 text-sm font-semibold transition-colors"
             >
-              🛣️ {t("Full Route on Maps", "전체 루트 지도로 보기")}
+              🛣️ {mapMode === "naver"
+                ? t("View First Stop on Naver Maps", "네이버 지도 — 첫 번째 장소 보기")
+                : t("Full Route on Maps", "전체 루트 지도로 보기")}
             </a>
           </div>
 
@@ -479,7 +483,7 @@ export default function RouteDetail() {
                       title={t("View day route on Maps", "이 날 루트 지도로 보기")}
                       className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-700 text-xs font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
                     >
-                      🗺️ {t("Day Route", "당일 루트")}
+                      🗺️ {mapMode === "naver" ? t("First Stop", "첫 장소") : t("Day Route", "당일 루트")}
                     </a>
                   </div>
 
