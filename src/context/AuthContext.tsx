@@ -6,6 +6,7 @@ interface Profile {
   id: string;
   nickname: string;
   is_admin: boolean;
+  country?: string;
 }
 
 interface AuthContextType {
@@ -13,7 +14,7 @@ interface AuthContextType {
   session: Session | null;
   profile: Profile | null;
   loading: boolean;
-  signUp: (email: string, password: string, nickname: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string, nickname: string, country: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
 }
@@ -54,11 +55,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }
 
-  const signUp = async (email: string, password: string, nickname: string) => {
+  const signUp = async (email: string, password: string, nickname: string, country: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { nickname } },
+      options: { data: { nickname, country } },
     });
     return { error };
   };

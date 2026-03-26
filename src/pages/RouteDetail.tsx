@@ -30,7 +30,6 @@ const themeColors: Record<string, string> = {
 function ReviewForm({ onAdd }: { onAdd: (data: { author: string; country?: string; rating: number; text: string }) => void }) {
   const { t } = useLang();
   const { user, profile } = useAuth();
-  const [country, setCountry] = useState("");
   const [rating, setRating] = useState(5);
   const [text, setText] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -49,8 +48,8 @@ function ReviewForm({ onAdd }: { onAdd: (data: { author: string; country?: strin
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
-    onAdd({ author: profile?.nickname ?? "익명", country: country.trim() || undefined, rating, text: text.trim() });
-    setCountry(""); setRating(5); setText("");
+    onAdd({ author: profile?.nickname ?? "익명", country: profile?.country || undefined, rating, text: text.trim() });
+    setRating(5); setText("");
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
   };
@@ -65,13 +64,9 @@ function ReviewForm({ onAdd }: { onAdd: (data: { author: string; country?: strin
           ✏️ {t("Write a Review", "후기 작성")} <span className="font-normal text-stone-400 text-xs">— {profile?.nickname}</span>
         </h4>
       </div>
-      <input
-        value={country}
-        onChange={(e) => setCountry(e.target.value)}
-        placeholder={t("Country (optional)", "국가 (선택)")}
-        maxLength={30}
-        className="w-36 px-3 py-2 rounded-lg border border-stone-200 dark:border-stone-600 bg-white dark:bg-stone-700 text-sm text-stone-700 dark:text-stone-200 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-300"
-      />
+      {profile?.country && (
+        <p className="text-xs text-stone-400 dark:text-stone-500">🌏 {profile.country}</p>
+      )}
       {/* 별점 */}
       <div className="flex items-center gap-2">
         <span className="text-xs text-stone-500 dark:text-stone-400">{t("Rating:", "별점:")}</span>

@@ -7,11 +7,20 @@ export default function Signup() {
 
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
+
+  const COUNTRIES = [
+    "대한민국", "일본", "중국", "미국", "캐나다", "영국", "호주", "프랑스",
+    "독일", "스페인", "이탈리아", "네덜란드", "스위스", "스웨덴", "노르웨이",
+    "덴마크", "핀란드", "폴란드", "러시아", "브라질", "멕시코", "아르헨티나",
+    "인도", "태국", "베트남", "인도네시아", "말레이시아", "싱가포르", "필리핀",
+    "홍콩", "대만", "뉴질랜드", "남아프리카", "이집트", "터키", "기타",
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +29,7 @@ export default function Signup() {
     if (password.length < 6) { setErrorMessage("비밀번호는 최소 6자 이상이어야 합니다."); return; }
 
     setIsLoading(true);
-    const { error } = await signUp(email, password, nickname);
+    const { error } = await signUp(email, password, nickname, country);
     if (error) {
       setErrorMessage("회원가입에 실패했습니다. 이미 사용 중인 이메일일 수 있습니다.");
       setIsLoading(false);
@@ -107,6 +116,22 @@ export default function Signup() {
                 autoComplete="email"
                 className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 placeholder-stone-300 text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:border-amber-300 focus-visible:bg-white"
               />
+            </div>
+
+            <div className="space-y-1.5">
+              <label htmlFor="country" className="block text-xs font-medium text-stone-500">국가</label>
+              <select
+                id="country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                required
+                className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 text-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:border-amber-300 focus-visible:bg-white"
+              >
+                <option value="">국가를 선택하세요</option>
+                {COUNTRIES.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
             </div>
 
             <div className="space-y-1.5">
