@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { routes } from "../data/routes";
 import { useLang } from "../context/LanguageContext";
@@ -228,6 +228,7 @@ function TransportSection({ routeId }: { routeId: string }) {
 // ── 메인 RouteDetail ────────────────────────────────────────
 export default function RouteDetail() {
   const { id } = useParams<{ id: string }>();
+  useEffect(() => { window.scrollTo(0, 0); }, [id]);
   const { t } = useLang();
   const route = routes.find((r) => r.id === id);
   const { likes, liked, toggle } = useLike(id ?? "");
