@@ -8,22 +8,6 @@ import type { SortMode } from "../components/FilterBar";
 import { useLang } from "../context/LanguageContext";
 import { supabase } from "../lib/supabase";
 
-// 관리자 픽 루트 ID 목록
-const ADMIN_PICKS = new Set([
-  "jeju-east-sunrise",
-  "busan-beach-village",
-  "jeonbuk-jeonju-gochang",
-  "gyeongbuk-gyeongju",
-  "seoul-hidden-alleys",
-  "gangwon-east-coast",
-  "jeonnam-suncheon",
-  "gyeongnam-south-sea",
-  "gyeonggi-gapyeong",
-  "jeju-hyeopjae-beach",
-  "busan-haedong-sunrise",
-  "gangwon-hongcheon-ginkgo",
-]);
-
 // 지역 쿼리 파라미터를 Route.region 값으로 매핑
 const regionQueryMap: Record<string, string> = {
   seoul: "Seoul",
@@ -53,6 +37,7 @@ export default function Routes() {
   const [sortMode, setSortMode] = useState<SortMode>("default");
   const [query, setQuery] = useState("");
   const [likesMap, setLikesMap] = useState<Record<string, number>>({});
+  const [adminPicks, setAdminPicks] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     supabase
@@ -64,6 +49,13 @@ export default function Routes() {
         data.forEach(({ route_id }) => { map[route_id] = (map[route_id] ?? 0) + 1; });
         setLikesMap(map);
       });
+    supabase
+      .from("admin_picks")
+      .select("route_id")
+      .then(({ data }) => {
+        if (!data) return;
+        setAdminPicks(new Set(data.map((r: { route_id: string }) => r.route_id)));
+      });
   }, []);
 
   const filtered = useMemo(() => {
@@ -72,7 +64,7 @@ export default function Routes() {
     let result = routes.filter((r) => {
       const matchTheme = selectedTheme === "all" || r.themes.includes(selectedTheme as Theme);
       const matchRegion = selectedRegion === "all" || r.region === selectedRegion;
-      const matchAdminPick = sortMode !== "adminPick" || ADMIN_PICKS.has(r.id);
+      const matchAdminPick = sortMode !== "adminPick" || adminPicks.has(r.id);
       const q = query.toLowerCase();
       const matchQuery =
         !q ||
@@ -89,7 +81,7 @@ export default function Routes() {
     }
 
     return result;
-  }, [selectedTheme, selectedRegion, sortMode, query, likesMap]);
+  }, [selectedTheme, selectedRegion, sortMode, query, likesMap, adminPicks]);
 
   return (
     <main className="pt-24 pb-20 min-h-screen bg-stone-50 dark:bg-stone-900">
@@ -151,7 +143,7 @@ export default function Routes() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {filtered.map((route) => (
-                <RouteCard key={route.id} route={route} adminPick={ADMIN_PICKS.has(route.id)} />
+                <RouteCard key={route.id} route={route} adminPick={adminPicks.has(route.id)} />
               ))}
             </div>
           </>
